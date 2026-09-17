@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UHS DIRA HAREWA | Official School Portal</title>
+
+  <link rel="preload" as="image" href="https://i.ibb.co/RpkWMq1d/file-00000000686c8208830d3cdd967f77fb.png" fetchpriority="high">
+
+  <style>
+    :root {
+      --primary: #0f3d75;
+      --primary-dark: #08213f;
+      --accent: #d97706;
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --text: #1f2937;
+      --text-muted: #4b5563;
+      --border: #e5e7eb;
+      --whatsapp: #25d366;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* Top Brand Header */
+    .top-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .top-header h1 { font-size: 1.25rem; font-weight: 800; margin: 0; letter-spacing: 0.5px; }
+    .top-header p { font-size: 0.82rem; color: #cbd5e1; margin-top: 2px; }
+
+    /* Sticky 4 Navigation Screens */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #ffffff;
+      padding: 8px 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    .nav-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .main-wrap { max-width: 960px; width: 100%; margin: 14px auto; padding: 0 12px; flex: 1; }
+
+    /* Class Selector Toolbar */
+    .class-bar {
+      background: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .class-bar label { font-size: 0.88rem; font-weight: 700; color: var(--primary); }
+    .class-select {
+      background: #eff6ff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Screen View Management */
+    .app-screen { display: none; }
+    .app-screen.active { display: block; }
+
+    /* Common Card Styling */
+    .section-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+    .sec-head {
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #eff6ff;
+      padding-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Banner */
+    .banner-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+
+    /* Notice Board */
+    .notice-list { list-style: none; }
+    .notice-item {
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+    }
+    .notice-date { font-size: 0.72rem; color: #dc2626; font-weight: 700; display: block; }
+
+    /* Principal Message */
+    .principal-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .principal-icon { font-size: 2rem; }
+    .principal-text h3 { color: var(--primary); font-size: 0.95rem; margin-bottom: 2px; }
+    .principal-text p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Routine Box */
+    .routine-wrapper {
+      background: #fffbeb;
+      border: 1px dashed var(--accent);
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .routine-wrapper h3 { font-size: 0.95rem; color: #b45309; margin-bottom: 8px; }
+    .routine-img {
+      width: 100%;
+      max-width: 580px;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      display: block;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+
+    /* Teacher Table */
+    .table-container { overflow-x: auto; }
+    .teacher-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .teacher-table th { background: #eff6ff; color: var(--primary); padding: 10px; border-bottom: 2px solid var(--border); text-align: left; }
+    .teacher-table td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .btn-call { background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; }
+    .btn-wa { background: var(--whatsapp); color: white; }
+
+    /* Admission Boxes */
+    .admission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .admission-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .admission-box h4 { color: #15803d; font-size: 0.95rem; margin-bottom: 6px; }
+    .admission-box ul { font-size: 0.85rem; color: #374151; padding-left: 16px; }
+
+    /* --- Galleries --- */
+    .gallery-vertical-scroll {
+      max-height: 290px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+    .gallery-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .gallery-grid-full {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .gallery-item {
+      height: 125px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #e2e8f0;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+    .gallery-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(15, 23, 42, 0.85);
+      color: #f8fafc;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 4px;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Contact Details Card */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .contact-details p { margin-bottom: 6px; font-size: 0.88rem; color: var(--text-muted); }
+    .contact-details strong { color: var(--text); }
+    .contact-details a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .map-frame { width: 100%; height: 200px; border: 1px solid var(--border); border-radius: 8px; }
+
+    /* Modal for Image Zoom */
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.88);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .image-modal img { max-width: 95%; max-height: 85%; border-radius: 8px; }
+    .close-modal { position: absolute; top: 15px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
+
+    /* Exact Single-Line Footer Across All Pages */
+    footer {
+      background: var(--primary-dark);
+      color: #cbd5e1;
+      text-align: center;
+      padding: 14px 10px;
+      font-size: 0.82rem;
+      border-top: 2px solid rgba(255,255,255,0.1);
+      margin-top: auto;
+    }
+    footer p { margin: 0; line-height: 1.5; }
+
+    @media (max-width: 768px) {
+      .gallery-grid-4, .gallery-grid-full { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .banner-img { height: 170px; }
+      .gallery-item { height: 110px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Brand Header -->
+  <header class="top-header">
+    <h1>UHS DIRA HAREWA</h1>
+    <p>उत्क्रमित उच्च माध्यमिक विद्यालय (Class 1st to 12th)</p>
+  </header>
+
+  <!-- Sticky 4 Navigation Screens -->
+  <nav class="nav-bar">
+    <button class="nav-btn active" onclick="switchScreen('homeScreen', this)">🏠 Home</button>
+    <button class="nav-btn" onclick="switchScreen('examScreen', this)">📅 Exam</button>
+    <button class="nav-btn" onclick="switchScreen('admissionScreen', this)">📝 Admission</button>
+    <button class="nav-btn" onclick="switchScreen('galleryScreen', this)">📸 Gallery</button>
+  </nav>
+
+  <div class="main-wrap">
+
+    <!-- Global Class Filter Toolbar -->
+    <div class="class-bar">
+      <label for="classSelector">कक्षा चुनें (Filter by Class):</label>
+      <select class="class-select" id="classSelector" onchange="filterSiteByClass(this.value)">
+        <option value="all">All Classes (सभी कक्षाएं)</option>
+        <option value="1">Class 1</option>
+        <option value="2">Class 2</option>
+        <option value="3">Class 3</option>
+        <option value="4">Class 4</option>
+        <option value="5">Class 5</option>
+        <option value="6">Class 6</option>
+        <option value="7">Class 7</option>
+        <option value="8">Class 8</option>
+        <option value="9">Class 9</option>
+        <option value="10">Class 10</option>
+        <option value="11">Class 11</option>
+        <option value="12">Class 12</option>
+      </select>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 1: HOME SCREEN                          -->
+    <!-- ============================================== -->
+    <div id="homeScreen" class="app-screen active">
+      
+      <!-- School Main Banner -->
+      <img src="https://i.ibb.co/RpkWMq1d/file-00000000686c8208830d3cdd967f77fb.png" alt="UHS DIRA HAREWA Campus" class="banner-img">
+
+      <!-- Active Ongoing Event -->
+      <section class="section-card" id="homeActiveEventsCard">
+        <h2 class="sec-head">🔴 सक्रिय परीक्षा सूचना (Active This Month)</h2>
+        
+        <div id="homeExamEvent" data-post-date="2026-09-18" class="routine-wrapper class-specific-box" data-class="12">
+          <h3>कक्षा 12वीं परीक्षा रूटीन (सक्रिय सत्र)</h3>
+          <img src="https://i.ibb.co/GQhmmXy9/file-0000000066fc82119b9bff9792b47888.png" alt="Routine" class="routine-img" onclick="openModal(this.src)">
+        </div>
+
+        <div id="noHomeEvents" style="display:none; text-align:center; color: var(--text-muted); font-size:0.88rem; padding: 10px;">
+          वर्तमान में 1 महीने से अधिक पुरानी सूचनाएं होम से हटा दी गई हैं। कृपया मेनू में <strong>Exam</strong> या <strong>Gallery</strong> बटन देखें।
+        </div>
+      </section>
+
+      <!-- Notice Board -->
+      <section class="section-card">
+        <h2 class="sec-head">📢 विद्यालय सूचना पट्ट (Notice Board)</h2>
+        <ul class="notice-list">
+          <li class="notice-item">
+            <span class="notice-date">NEW UPDATE</span>
+            कक्षा 12वीं की परीक्षा का आधिकारिक रूटीन जारी है। विस्तृत जानकारी Exam मेनू में भी उपलब्ध है।
+          </li>
+          <li class="notice-item">
+            <span class="notice-date">ANNOUNCEMENT</span>
+            सत्र 2026-27 के नामांकन एवं फॉर्म संबंधित नियम Admission मेनू में देख सकते हैं।
+          </li>
+        </ul>
+      </section>
+
+      <!-- Principal Message -->
+      <section class="section-card">
+        <h2 class="sec-head">🎓 प्रधानाध्यापक का संदेश</h2>
+        <div class="principal-card">
+          <div class="principal-icon">👨‍🏫</div>
+          <div class="principal-text">
+            <h3>श्री अरुण कुमार (प्रधानाध्यापक, UHS DIRA HAREWA)</h3>
+            <p>"हमारा उद्देश्य ग्रामीण क्षेत्र के हर विद्यार्थी को अनुशासित और आधुनिक शिक्षा देकर आत्मनिर्भर बनाना है।"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Teachers Table -->
+      <section class="section-card">
+        <h2 class="sec-head">👨‍🏫 शिक्षक संपर्क एवं क्लास ग्रुप्स</h2>
+        <div class="table-container">
+          <table class="teacher-table">
+            <thead>
+              <tr><th>शिक्षक का नाम</th><th>पद / कक्षा</th><th>संपर्क व WhatsApp</th></tr>
+            </thead>
+            <tbody id="homeTeacherBody">
+              <tr class="teacher-row" data-classes="all 1 2 3 4 5 6 7 8 9 10 11 12">
+                <td><strong>श्री अरुण कुमार</strong></td><td>प्रधानाध्यापक (All)</td>
+                <td><a href="tel:+919876543210" class="btn-action btn-call">📞 कॉल</a><a href="https://chat.whatsapp.com/" target="_blank" class="btn-action btn-wa">💬 ग्रुप</a></td>
+              </tr>
+              <tr class="teacher-row" data-classes="all 1 2 3 4 5">
+                <td><strong>श्री सुनील कुमार</strong></td><td>प्राथमिक प्रभारी (1-5)</td>
+                <td><a href="tel:+919876543211" class="btn-action btn-call">📞 कॉल</a><a href="https://chat.whatsapp.com/" target="_blank" class="btn-action btn-wa">💬 ग्रुप</a></td>
+              </tr>
+              <tr class="teacher-row" data-classes="all 6 7 8">
+                <td><strong>श्रीमती पूनम कुमारी</strong></td><td>मध्य विद्यालय (6-8)</td>
+                <td><a href="tel:+919876543212" class="btn-action btn-call">📞 कॉल</a><a href="https://chat.whatsapp.com/" target="_blank" class="btn-action btn-wa">💬 ग्रुप</a></td>
+              </tr>
+              <tr class="teacher-row" data-classes="all 9 10">
+                <td><strong>श्री राकेश रंजन</strong></td><td>माध्यमिक प्रभारी (9-10)</td>
+                <td><a href="tel:+919876543213" class="btn-action btn-call">📞 कॉल</a><a href="https://chat.whatsapp.com/" target="_blank" class="btn-action btn-wa">💬 ग्रुप</a></td>
+              </tr>
+              <tr class="teacher-row" data-classes="all 11 12">
+                <td><strong>श्री अजय शर्मा</strong></td><td>इंटरमीडिएट संकाय (11-12)</td>
+                <td><a href="tel:+919876543214" class="btn-action btn-call">📞 कॉल</a><a href="https://chat.whatsapp.com/" target="_blank" class="btn-action btn-wa">💬 ग्रुप</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- HOME ONLY: School Campus View Card -->
+      <section class="section-card">
+        <div class="sec-head">
+          <span>🏫 विद्यालय परिसर (Campus View)</span>
+          <span style="font-size: 0.75rem; color: var(--accent);">टैप कर बड़ा देखें 🔍</span>
+        </div>
+        <div style="max-width: 320px;">
+          <div class="gallery-item" onclick="openModal('https://i.ibb.co/RpkWMq1d/file-00000000686c8208830d3cdd967f77fb.png')">
+            <img src="https://i.ibb.co/RpkWMq1d/file-00000000686c8208830d3cdd967f77fb.png" alt="Campus">
+            <span class="gallery-label">मुख्य विद्यालय भवन</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOME ONLY: Events Highlights -->
+      <section class="section-card">
+        <div class="sec-head">
+          <span>🎉 विद्यालय गतिविधियाँ व कार्यक्रम (Events Highlights)</span>
+          <span style="font-size: 0.75rem; color: var(--accent);">⬇️ स्क्रोल करें | टैप करें</span>
+        </div>
+        
+        <div class="gallery-vertical-scroll">
+          <div class="gallery-grid-4" id="homeEventsGrid">
+            
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/60DXvpy5/IMG-20260918-WA0000.jpg')">
+              <img src="https://i.ibb.co/60DXvpy5/IMG-20260918-WA0000.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 18-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/84Pf8cbH/IMG-20260918-WA0001.jpg')">
+              <img src="https://i.ibb.co/84Pf8cbH/IMG-20260918-WA0001.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 18-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/spXFSR63/IMG-20260918-WA0002.jpg')">
+              <img src="https://i.ibb.co/spXFSR63/IMG-20260918-WA0002.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 18-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/LXRj50ZZ/IMG-20260918-WA0003.jpg')">
+              <img src="https://i.ibb.co/LXRj50ZZ/IMG-20260918-WA0003.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 18-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/Q3jF2fhQ/IMG-20260918-WA0004.jpg')">
+              <img src="https://i.ibb.co/Q3jF2fhQ/IMG-20260918-WA0004.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 18-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/vxVbwwfk/IMG-20260913-WA0000.jpg')">
+              <img src="https://i.ibb.co/vxVbwwfk/IMG-20260913-WA0000.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 13-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/6RSY5XpM/IMG-20260907-WA0008.jpg')">
+              <img src="https://i.ibb.co/6RSY5XpM/IMG-20260907-WA0008.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 07-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/tMNsyqk9/IMG-20260907-WA0009.jpg')">
+              <img src="https://i.ibb.co/tMNsyqk9/IMG-20260907-WA0009.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 07-09-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/23bqx2hM/IMG-20260829-WA0022.jpg')">
+              <img src="https://i.ibb.co/23bqx2hM/IMG-20260829-WA0022.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 29-08-2026</span>
+            </div>
+
+            <div class="gallery-item home-event-item" data-class="12" onclick="openModal('https://i.ibb.co/Q31LwgXp/IMG-20260827-WA0005.jpg')">
+              <img src="https://i.ibb.co/Q31LwgXp/IMG-20260827-WA0005.jpg" alt="Event" loading="lazy">
+              <span class="gallery-label">Class 12 | 27-08-2026</span>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact, Phone & Google Map -->
+      <section class="section-card">
+        <h2 class="sec-head">📍 संपर्क एवं विद्यालय लोकेशन</h2>
+        <div class="contact-grid">
+          <div class="contact-details">
+            <p><strong>विद्यालय:</strong> उत्क्रमित उच्च माध्यमिक विद्यालय (UHS DIRA HAREWA)</p>
+            <p><strong>स्थान:</strong> दिरा हरेवा, लखीसराय, बिहार</p>
+            <p><strong>📞 फोन:</strong> <a href="tel:+919876543210">+91 98765 43210</a></p>
+            <p><strong>✉️ ईमेल:</strong> <a href="mailto:uhs.diraharewa@gmail.com">uhs.diraharewa@gmail.com</a></p>
+            <p><strong>⏰ समय:</strong> प्रातः 09:00 AM से 04:00 PM (सोमवार - शनिवार)</p>
+          </div>
+          <div>
+            <iframe class="map-frame" src="https://maps.google.com/maps?q=UHS+DIRA+HAREWA&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy" title="Map"></iframe>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 2: EXAM SCREEN                         -->
+    <!-- ============================================== -->
+    <div id="examScreen" class="app-screen">
+      <section class="section-card">
+        <h2 class="sec-head">📅 परीक्षा विवरण एवं रूटीन आर्काइव</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">यहाँ परीक्षा रूटीन और टाइम-टेबल हमेशा उपलब्ध रहेगा:</p>
+        
+        <div class="routine-wrapper class-specific-box" data-class="12">
+          <h3>कक्षा 12वीं (इंटरमीडिएट) परीक्षा रूटीन</h3>
+          <img src="https://i.ibb.co/GQhmmXy9/file-0000000066fc82119b9bff9792b47888.png" alt="12th Routine" class="routine-img" onclick="openModal(this.src)">
+        </div>
+
+        <div id="noExamForClass" style="display:none; text-align:center; padding: 20px; color: var(--text-muted);">
+          इस चुनी गई कक्षा का परीक्षा रूटीन शीघ्र प्रकाशित होगा।
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 3: ADMISSION SCREEN                    -->
+    <!-- ============================================== -->
+    <div id="admissionScreen" class="app-screen">
+      <section class="section-card">
+        <h2 class="sec-head">📝 नामांकन नियम, पात्रता एवं विवरण (2026-27)</h2>
+        <div class="admission-grid">
+          <div class="admission-box">
+            <h4>कक्षा 1 से 8 (प्राइमरी व मिडिल)</h4>
+            <ul>
+              <li>मुफ्त नामांकन एवं पाठ्यपुस्तक सुविधा</li>
+              <li>जन्म प्रमाण पत्र / आधार कार्ड अनिवार्य</li>
+              <li>अभिभावक का बैंक खाता व आधार विवरण</li>
+            </ul>
+          </div>
+          <div class="admission-box">
+            <h4>कक्षा 9वीं से 12वीं (माध्यमिक व इंटर)</h4>
+            <ul>
+              <li>पूर्व विद्यालय का स्थानांतरण प्रमाण पत्र (TC / SLC)</li>
+              <li>कक्षा 10वीं अंकपत्र (इंटर प्रवेश हेतु)</li>
+              <li>Arts एवं Science संकाय में सीटें उपलब्ध</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SCREEN 4: GALLERY SCREEN (SIRF EVENTS IMAGE)  -->
+    <!-- ============================================== -->
+    <div id="galleryScreen" class="app-screen">
+      <section class="section-card" style="min-height: 75vh;">
+        <h2 class="sec-head">
+          <span>🎉 विद्यालय कार्यक्रम एवं गतिविधियाँ (Events Gallery)</span>
+          <span style="font-size: 0.75rem; color: var(--accent);">टैप कर बड़ा देखें 🔍</span>
+        </h2>
+        
+        <!-- Yahan par campus image HATA di gayi hai, SIRF EVENTS hain -->
+        <div class="gallery-grid-full" id="fullGalleryGrid">
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/60DXvpy5/IMG-20260918-WA0000.jpg')">
+            <img src="https://i.ibb.co/60DXvpy5/IMG-20260918-WA0000.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 18-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/84Pf8cbH/IMG-20260918-WA0001.jpg')">
+            <img src="https://i.ibb.co/84Pf8cbH/IMG-20260918-WA0001.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 18-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/spXFSR63/IMG-20260918-WA0002.jpg')">
+            <img src="https://i.ibb.co/spXFSR63/IMG-20260918-WA0002.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 18-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/LXRj50ZZ/IMG-20260918-WA0003.jpg')">
+            <img src="https://i.ibb.co/LXRj50ZZ/IMG-20260918-WA0003.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 18-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/Q3jF2fhQ/IMG-20260918-WA0004.jpg')">
+            <img src="https://i.ibb.co/Q3jF2fhQ/IMG-20260918-WA0004.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 18-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/vxVbwwfk/IMG-20260913-WA0000.jpg')">
+            <img src="https://i.ibb.co/vxVbwwfk/IMG-20260913-WA0000.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 13-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/6RSY5XpM/IMG-20260907-WA0008.jpg')">
+            <img src="https://i.ibb.co/6RSY5XpM/IMG-20260907-WA0008.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 07-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/tMNsyqk9/IMG-20260907-WA0009.jpg')">
+            <img src="https://i.ibb.co/tMNsyqk9/IMG-20260907-WA0009.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 07-09-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/23bqx2hM/IMG-20260829-WA0022.jpg')">
+            <img src="https://i.ibb.co/23bqx2hM/IMG-20260829-WA0022.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 29-08-2026</span>
+          </div>
+
+          <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/Q31LwgXp/IMG-20260827-WA0005.jpg')">
+            <img src="https://i.ibb.co/Q31LwgXp/IMG-20260827-WA0005.jpg" alt="Event" loading="lazy">
+            <span class="gallery-label">Class 12 | 27-08-2026</span>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <!-- Fullscreen Modal for Zooming Images -->
+  <div class="image-modal" id="imageModal" onclick="closeModal()">
+    <span class="close-modal">&times;</span>
+    <img id="modalImg" src="" alt="Zoom Preview">
+  </div>
+
+  <!-- Exact Single-Line Footer Across All Pages -->
+  <footer>
+    <p>&copy; 2026 उत्क्रमित उच्च माध्यमिक विद्यालय (UHS DIRA HAREWA). सर्वाधिकार सुरक्षित।</p>
+  </footer>
+
+  <!-- JavaScript App Logic -->
+  <script>
+    // Screen Switching
+    function switchScreen(screenId, btn) {
+      document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(screenId).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Class Filter & 1-Month Rule Logic
+    function filterSiteByClass(selectedClass) {
+      document.querySelectorAll('.teacher-row').forEach(row => {
+        const classes = row.getAttribute('data-classes').split(' ');
+        row.style.display = (selectedClass === 'all' || classes.includes(selectedClass)) ? '' : 'none';
+      });
+
+      document.querySelectorAll('.class-specific-box').forEach(box => {
+        const boxClass = box.getAttribute('data-class');
+        box.style.display = (selectedClass === 'all' || selectedClass === boxClass) ? 'block' : 'none';
+      });
+
+      document.querySelectorAll('#homeEventsGrid .home-event-item').forEach(item => {
+        const itemClass = item.getAttribute('data-class');
+        item.style.display = (selectedClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
+      });
+
+      // Gallery Screen (Sirf Events Filter)
+      document.querySelectorAll('#fullGalleryGrid .gallery-item').forEach(item => {
+        const itemClass = item.getAttribute('data-class');
+        item.style.display = (selectedClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
+      });
+
+      checkHomeEventExpiry(selectedClass);
+    }
+
+    // 1-Month Expiry Function for Home
+    function checkHomeEventExpiry(selectedClass) {
+      const homeExam = document.getElementById('homeExamEvent');
+      const noEventsMsg = document.getElementById('noHomeEvents');
+      
+      const postDateStr = homeExam.getAttribute('data-post-date');
+      const postDate = new Date(postDateStr);
+      const today = new Date();
+
+      const diffTime = today - postDate;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      const isWithinOneMonth = diffDays <= 30;
+      const isClassMatch = (selectedClass === 'all' || selectedClass === '12');
+
+      if (isWithinOneMonth && isClassMatch) {
+        homeExam.style.display = 'block';
+        noEventsMsg.style.display = 'none';
+      } else {
+        homeExam.style.display = 'none';
+        noEventsMsg.style.display = 'block';
+      }
+    }
+
+    // Modal Zoom Functions
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      filterSiteByClass('all');
+    });
+  </script>
+
+</body>
+</html>
