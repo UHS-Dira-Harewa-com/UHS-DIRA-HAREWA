@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="Ec-0gtdfKQgRvPq51DoprhUinaAwi3U4DSWQ4RlAgdg" />
   <title>UHS DIRA HAREWA | Official School Portal</title>
 
   <link rel="preload" as="image" href="https://i.ibb.co/RpkWMq1d/file-00000000686c8208830d3cdd967f77fb.png" fetchpriority="high">
@@ -268,7 +267,15 @@
     .contact-details p { margin-bottom: 6px; font-size: 0.88rem; color: var(--text-muted); }
     .contact-details strong { color: var(--text); }
     .contact-details a { color: var(--primary); text-decoration: none; font-weight: 600; }
-    .map-frame { width: 100%; height: 200px; border: 1px solid var(--border); border-radius: 8px; }
+    
+    /* Responsive Map Frame */
+    .map-frame { 
+      width: 100%; 
+      height: 230px; 
+      border: 1px solid var(--border); 
+      border-radius: 8px; 
+      display: block;
+    }
 
     /* Modal for Image Zoom */
     .image-modal {
@@ -503,19 +510,28 @@
         </div>
       </section>
 
-      <!-- Contact, Phone & Google Map -->
+      <!-- Contact, Phone & Google Map (आपका दिया हुआ 360° व्यू कोड) -->
       <section class="section-card">
         <h2 class="sec-head">📍 संपर्क एवं विद्यालय लोकेशन</h2>
         <div class="contact-grid">
           <div class="contact-details">
             <p><strong>विद्यालय:</strong> उत्क्रमित उच्च माध्यमिक विद्यालय (UHS DIRA HAREWA)</p>
-            <p><strong>स्थान:</strong> दिरा हरेवा, लखीसराय, बिहार</p>
+            <p><strong>स्थान:</strong> दिरा हरेवा, लखीसराय, बिहार 811315</p>
             <p><strong>📞 फोन:</strong> <a href="tel:+919876543210">+91 98765 43210</a></p>
             <p><strong>✉️ ईमेल:</strong> <a href="mailto:uhs.diraharewa@gmail.com">uhs.diraharewa@gmail.com</a></p>
             <p><strong>⏰ समय:</strong> प्रातः 09:00 AM से 04:00 PM (सोमवार - शनिवार)</p>
           </div>
           <div>
-            <iframe class="map-frame" src="https://maps.google.com/maps?q=UHS+DIRA+HAREWA&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy" title="Map"></iframe>
+            <!-- आपका दिया हुआ नया मैप कोड -->
+            <iframe 
+              class="map-frame"
+              src="https://www.google.com/maps/embed?pb=!4v1789701533129!6m8!1m7!1s50edhNr9wYLvjRICM8N20Q!2m2!1d25.01553366818104!2d86.0827608080904!3f288.1268446214432!4f-1.8755902943903067!5f0.7820865974627469" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="strict-origin-when-cross-origin"
+              title="UHS Dira Harewa 360 View">
+            </iframe>
           </div>
         </div>
       </section>
@@ -569,7 +585,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- SCREEN 4: GALLERY SCREEN (SIRF EVENTS IMAGE)  -->
+    <!-- SCREEN 4: GALLERY SCREEN                      -->
     <!-- ============================================== -->
     <div id="galleryScreen" class="app-screen">
       <section class="section-card" style="min-height: 75vh;">
@@ -578,7 +594,6 @@
           <span style="font-size: 0.75rem; color: var(--accent);">टैप कर बड़ा देखें 🔍</span>
         </h2>
         
-        <!-- Yahan par campus image HATA di gayi hai, SIRF EVENTS hain -->
         <div class="gallery-grid-full" id="fullGalleryGrid">
 
           <div class="gallery-item" data-class="12" onclick="openModal('https://i.ibb.co/60DXvpy5/IMG-20260918-WA0000.jpg')">
@@ -674,19 +689,18 @@
 
       document.querySelectorAll('#homeEventsGrid .home-event-item').forEach(item => {
         const itemClass = item.getAttribute('data-class');
-        item.style.display = (selectedClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
+        item.style.display = (selectedClass === 'all' || itemClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
       });
 
-      // Gallery Screen (Sirf Events Filter)
       document.querySelectorAll('#fullGalleryGrid .gallery-item').forEach(item => {
         const itemClass = item.getAttribute('data-class');
-        item.style.display = (selectedClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
+        item.style.display = (selectedClass === 'all' || itemClass === 'all' || selectedClass === itemClass) ? 'block' : 'none';
       });
 
       checkHomeEventExpiry(selectedClass);
     }
 
-    // 1-Month Expiry Function for Home
+    // 1-Month Expiry Function for Home Event
     function checkHomeEventExpiry(selectedClass) {
       const homeExam = document.getElementById('homeExamEvent');
       const noEventsMsg = document.getElementById('noHomeEvents');
@@ -727,3 +741,4 @@
 
 </body>
 </html>
+
